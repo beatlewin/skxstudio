@@ -240,6 +240,54 @@
             color: var(--primary-orange);
         }
 
+        /* Ads Grid & Animation Styles */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .ad-card {
+            display: block;
+            text-decoration: none;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse-border 4s infinite alternate;
+        }
+
+        .ad-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .ad-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary-orange);
+            box-shadow: 0 12px 30px rgba(245, 134, 49, 0.25);
+        }
+
+        .ad-card:hover .ad-image {
+            transform: scale(1.03);
+        }
+
+        @keyframes pulse-border {
+            0% {
+                border-color: rgba(255, 255, 255, 0.12);
+            }
+            50% {
+                border-color: rgba(245, 134, 49, 0.4);
+            }
+            100% {
+                border-color: rgba(255, 255, 255, 0.12);
+            }
+        }
+
         /* Responsive Breakpoints */
         @media (max-width: 900px) {
             .comics-grid {
@@ -247,6 +295,9 @@
             }
             .socials-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .ads-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -330,6 +381,22 @@
                 </a>
             </div>
         </section>
+
+        <!-- Секция Реклама -->
+        <section id="ads" class="glass-panel">
+            <h2 class="section-title" data-i18n="adsTitle">реклама</h2>
+            <div class="ads-grid">
+                <!-- 1 Рекламный баннер -->
+                <a href="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" target="_blank" rel="noopener noreferrer" class="ad-card" aria-label="Реклама TStudios">
+                    <img src="image_8b13c3.jpg" alt="TStudios Banner" class="ad-image">
+                </a>
+
+                <!-- 2 Рекламный баннер -->
+                <a href="https://millida.net/launcher" target="_blank" rel="noopener noreferrer" class="ad-card" aria-label="Реклама Millida Launcher">
+                    <img src="image_8b13de.jpg" alt="Millida Launcher Banner" class="ad-image">
+                </a>
+            </div>
+        </section>
     </main>
 
     <script>
@@ -340,21 +407,24 @@
                 langSk: "Словацкий перевод",
                 langRu: "Оригинал русский",
                 langEn: "Английский перевод",
-                socialsTitle: "наши соцсети"
+                socialsTitle: "наши соцсети",
+                adsTitle: "реклама"
             },
             en: {
                 comicsTitle: "our comics",
                 langSk: "Slovak translation",
                 langRu: "Russian original",
                 langEn: "English translation",
-                socialsTitle: "our social media"
+                socialsTitle: "our social media",
+                adsTitle: "advertising"
             },
             sk: {
                 comicsTitle: "naše komiksy",
                 langSk: "Slovenský preklad",
                 langRu: "Ruský originál",
                 langEn: "Anglický preklad",
-                socialsTitle: "naše sociálne siete"
+                socialsTitle: "naše sociálne siete",
+                adsTitle: "reklama"
             }
         };
 
