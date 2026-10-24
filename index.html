@@ -240,11 +240,12 @@
             color: var(--primary-orange);
         }
 
-        /* Friends / Animated Slider Section Styling */
+        /* Friends / Interactive Slider Section Styling */
         .friends-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            gap: 20px;
         }
 
         .animated-banner-link {
@@ -279,6 +280,28 @@
 
         .animated-slide.active {
             opacity: 1;
+        }
+
+        /* Slider Indicators (Dots) */
+        .slider-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--glass-border);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--primary-orange);
+            transform: scale(1.2);
         }
 
         /* Responsive Breakpoints */
@@ -372,16 +395,25 @@
             </div>
         </section>
 
-        <!-- Секция «Наши друзья» с анимированным слайдером (в самом низу) -->
+        <!-- Секция «Наши друзья» со слайдером и кнопками переключения -->
         <section id="friends" class="glass-panel">
             <h2 class="section-title" data-i18n="friendsTitle">Наши друзья</h2>
             <div class="friends-container">
                 <a id="animatedBannerLink" href="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" target="_blank" rel="noopener noreferrer" class="animated-banner-link">
-                    <!-- 1 картинка (image_8b13c3.jpg)[cite: 6] -->
+                    <!-- 1 картинка (TStudios) -->
                     <img src="image_8b13c3.jpg" alt="TStudios" class="animated-slide active" data-index="0" data-url="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" />
-                    <!-- 2 картинка (image_8b13de.jpg)[cite: 7] -->
+                    <!-- 2 картинка (Millida Launcher) -->
                     <img src="image_8b13de.jpg" alt="Millida Launcher" class="animated-slide" data-index="1" data-url="https://millida.net/launcher" />
+                    <!-- 3 картинка (beatlewind) -->
+                    <img src="image_8c0004.png" alt="beatlewind" class="animated-slide" data-index="2" data-url="https://www.youtube.com/@beatlewind" />
                 </a>
+
+                <!-- Интерактивные точки для переключения -->
+                <div class="slider-dots" id="sliderDots">
+                    <button class="slider-dot active" data-index="0" aria-label="Слайд 1"></button>
+                    <button class="slider-dot" data-index="1" aria-label="Слайд 2"></button>
+                    <button class="slider-dot" data-index="2" aria-label="Слайд 3"></button>
+                </div>
             </div>
         </section>
     </main>
@@ -443,23 +475,52 @@
                 : '<i class="fa-solid fa-sun"></i>';
         });
 
-        // --- Логика анимированного слайдера и динамической смены ссылок ---
+        // --- Логика слайдера (автоматическая анимация + ручное переключение по точкам) ---
         const slides = document.querySelectorAll('.animated-slide');
+        const dots = document.querySelectorAll('.slider-dot');
         const bannerLink = document.getElementById('animatedBannerLink');
         let currentIndex = 0;
+        let slideInterval;
 
-        function switchSlide() {
+        function showSlide(index) {
             slides[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % slides.length;
-            const activeSlide = slides[currentIndex];
-            activeSlide.classList.add('active');
+            dots[currentIndex].classList.remove('active');
+
+            currentIndex = index;
+
+            slides[currentIndex].classList.add('active');
+            dots[currentIndex].classList.add('active');
             
-            // Динамически меняем ссылку в зависимости от текущей отображаемой картинки
-            bannerLink.href = activeSlide.getAttribute('data-url');
+            // Устанавливаем соответствующую ссылку
+            bannerLink.href = slides[currentIndex].getAttribute('data-url');
         }
 
-        // Переключение картинок каждые 4 секунды
-        setInterval(switchSlide, 4000);
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        // Автоматическое переключение каждые 4 секунды
+        function startSlider() {
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+
+        function resetSliderTimer() {
+            clearInterval(slideInterval);
+            startSlider();
+        }
+
+        // Обработка кликов по точкам ручного управления
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const targetIndex = parseInt(e.target.getAttribute('data-index'));
+                showSlide(targetIndex);
+                resetSliderTimer(); // Сбрасываем таймер при ручном клике
+            });
+        });
+
+        // Запуск слайдера при загрузке
+        startSlider();
     </script>
 </body>
 </html>
