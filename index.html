@@ -98,7 +98,7 @@
       background: color-mix(in srgb, var(--page) 74%, transparent);
       -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
     }
-    .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .brand { display: inline-flex; align-items: center; gap: 12px; min-width: max-content; text-decoration: none; }
     .brand-mark {
       display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px;
@@ -112,6 +112,9 @@
     .main-nav { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 2.1vw, 28px); }
     .main-nav a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 650; transition: color .2s ease; }
     .main-nav a:hover, .main-nav a:focus-visible { color: var(--accent); }
+    .language-picker { display:inline-flex; align-items:center; gap:7px; padding:7px 10px; border:1px solid var(--glass-border); border-radius:999px; background:var(--glass); color:var(--accent); }
+    .language-picker select { max-width:125px; border:0; outline:0; color:var(--text); background:transparent; font-size:.82rem; font-weight:750; cursor:pointer; }
+    .language-picker option { color:#211a20; background:#fff; }
     .theme-toggle {
       display: inline-flex; align-items: center; justify-content: center; gap: 9px;
       min-height: 42px; padding: 9px 13px; border: 1px solid var(--glass-border); border-radius: 999px;
@@ -187,6 +190,14 @@
     .comic-link i { transition: transform .2s ease; }
     .comic-card:hover .comic-link i { transform: translateX(4px); }
 
+    .crystal-row { display:flex; align-items:center; gap:17px; margin-top:22px; padding:12px 17px 12px 12px; border-radius:18px; text-decoration:none; transition:transform .2s ease,border-color .2s ease; }
+    .crystal-row:hover { transform:translateY(-3px); border-color:rgba(245,134,49,.55); }
+    .crystal-row img { width:82px; height:82px; object-fit:cover; border-radius:12px; }
+    .crystal-row-copy { display:grid; gap:3px; flex:1; }
+    .crystal-row-copy strong { font-size:1rem; letter-spacing:.02em; }
+    .crystal-row-copy strong span { color:var(--accent); }
+    .crystal-row-copy small { color:var(--muted); font-size:.82rem; }
+    .crystal-row > i { color:var(--accent); }
     .about-panel { display: grid; grid-template-columns: .8fr 1.2fr; gap: 32px; align-items: center; padding: clamp(24px, 4vw, 42px); border-radius: var(--radius); }
     .about-symbol { display: grid; place-items: center; min-height: 220px; border-radius: 20px; overflow: hidden; background: radial-gradient(circle at 50% 40%, rgba(245,134,49,.28), transparent 52%), var(--glass); }
     .about-symbol .brand-mark { width: 94px; height: 94px; border-radius: 28px; font-size: 2.3rem; }
@@ -293,6 +304,10 @@
       .comic-info { padding: 18px; }
       .comic-meta { flex-direction: row; align-items: center; }
       .social-grid { gap: 10px; }
+      .header-inner { flex-wrap:wrap; padding-block:10px; }
+      .main-nav { order:3; width:100%; flex-wrap:wrap; }
+      .language-picker { margin-left:auto; }
+      .crystal-row img { width:64px; height:64px; }
       .social-card { gap: 9px; padding: 12px 10px; }
       .social-icon { flex-basis: 36px; height: 36px; font-size: 1rem; }
       .social-name { font-size: .82rem; }
@@ -326,6 +341,7 @@
         <a href="#reviews">Отзывы</a>
       </nav>
 
+      <label class="language-picker" for="languageSelect"><i class="fa-solid fa-language" aria-hidden="true"></i><span class="sr-only">Язык сайта</span><select id="languageSelect" aria-label="Выбрать язык"><option value="ru">🇷🇺 Русский</option><option value="en">🇬🇧 English</option><option value="sk">🇸🇰 Slovenčina</option></select></label>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему оформления" aria-pressed="false">
         <i class="fa-solid fa-sun" aria-hidden="true"></i><span>Светлая тема</span>
       </button>
@@ -379,7 +395,7 @@
 
       <div class="comic-grid">
         <!-- Замените href каждой карточки на реальную ссылку на соответствующий комикс. -->
-        <a class="comic-card glass" href="https://example.com/comic-one" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Грань: Нулевой код">
+        <a class="comic-card glass" href="https://example.com/comic-one" target="_blank" rel="noopener noreferrer" aria-label="Open ORIGINAL (Russian) comic">
           <div class="comic-cover">
             <span class="cover-label">Sci-fi · 01</span>
             <svg viewBox="0 0 420 470" role="img" aria-label="Футуристический город под оранжевой луной">
@@ -405,13 +421,13 @@
           </div>
           <div class="comic-info">
             <div class="comic-meta"><span><i class="fa-solid fa-book-open" aria-hidden="true"></i> Научная фантастика</span><span>Серия № 1</span></div>
-            <h3>Грань: Нулевой код</h3>
+            <h3>ORIGINAL (russian)</h3>
             <p>Город будущего скрывает сбой, который способен изменить реальность. Но кто написал первый код?</p>
             <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
           </div>
         </a>
 
-        <a class="comic-card glass" href="https://example.com/comic-two" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Пепельный город">
+        <a class="comic-card glass" href="https://example.com/comic-two" target="_blank" rel="noopener noreferrer" aria-label="Open English dubbing comic">
           <div class="comic-cover">
             <span class="cover-label">Mystery · 02</span>
             <svg viewBox="0 0 420 470" role="img" aria-label="Таинственный город, окружённый дымом и горами">
@@ -436,13 +452,13 @@
           </div>
           <div class="comic-info">
             <div class="comic-meta"><span><i class="fa-solid fa-moon" aria-hidden="true"></i> Мистика</span><span>Серия № 2</span></div>
-            <h3>Пепельный город</h3>
+            <h3>English dubbing</h3>
             <p>Туман не рассеивается годами, а жители забывают прошлое. Одна находка меняет всё.</p>
             <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
           </div>
         </a>
 
-        <a class="comic-card glass" href="https://example.com/comic-three" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Нулевой день">
+        <a class="comic-card glass" href="https://example.com/comic-three" target="_blank" rel="noopener noreferrer" aria-label="Open Slovak dubbing comic">
           <div class="comic-cover">
             <span class="cover-label">Adventure · 03</span>
             <svg viewBox="0 0 420 470" role="img" aria-label="Герой перед светящимся порталом в фантастический мир">
@@ -468,12 +484,17 @@
           </div>
           <div class="comic-info">
             <div class="comic-meta"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Приключения</span><span>Серия № 3</span></div>
-            <h3>Нулевой день</h3>
+            <h3>Slovak dubbing</h3>
             <p>Когда открывается загадочный портал, обычный день становится началом большого пути.</p>
             <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
           </div>
         </a>
       </div>
+      <a class="crystal-row glass" href="https://example.com/crystal-of-life" target="_blank" rel="noopener noreferrer">
+        <img src="Gemini_Generated_Image_r1gzwir1gzwir1gz.jpg" alt="Обложка комикса Crystal of Life: Beginning">
+        <span class="crystal-row-copy"><strong>CRYSTAL OF LIFE <span>(Beginning)</span></strong><small data-i18n="crystalSubtitle">История начинается здесь</small></span>
+        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+      </a>
     </section>
 
     <section class="section container" id="about" aria-labelledby="about-title">
@@ -534,9 +555,9 @@
             <div class="form-field">
               <label for="reviewComic">Какой комикс? *</label>
               <select class="form-control" id="reviewComic" name="comic" required>
-                <option value="one">Грань: Нулевой код</option>
-                <option value="two">Пепельный город</option>
-                <option value="three">Нулевой день</option>
+                <option value="one">ORIGINAL (russian)</option>
+                <option value="two">English dubbing</option>
+                <option value="three">Slovak dubbing</option>
               </select>
             </div>
             <fieldset class="form-field" style="padding:0;border:0;margin-inline:0">
@@ -565,9 +586,9 @@
             <label class="sr-only" for="reviewFilter">Фильтр отзывов</label>
             <select class="form-control review-filter" id="reviewFilter" aria-label="Показывать отзывы по комиксу">
               <option value="all">Все комиксы</option>
-              <option value="one">Грань: Нулевой код</option>
-              <option value="two">Пепельный город</option>
-              <option value="three">Нулевой день</option>
+              <option value="one">ORIGINAL (russian)</option>
+              <option value="two">English dubbing</option>
+              <option value="three">Slovak dubbing</option>
             </select>
           </div>
           <div class="review-list" id="reviewList" aria-live="polite"></div>
@@ -590,9 +611,9 @@
 
     // Названия комиксов используются в карточках отзывов и фильтре.
     const comicNames = {
-      one: "Грань: Нулевой код",
-      two: "Пепельный город",
-      three: "Нулевой день"
+      one: "ORIGINAL (russian)",
+      two: "English dubbing",
+      three: "Slovak dubbing"
     };
 
     const sampleReviews = [
@@ -729,6 +750,41 @@
       const savedTheme = localStorage.getItem(THEME_KEY);
       if (savedTheme === "light" || savedTheme === "dark") applyTheme(savedTheme);
     } catch (error) { /* Используется тёмная тема по умолчанию. */ }
+
+
+    // Interface translations: Russian, English and Slovak. Selection is remembered locally.
+    const translations = {
+      ru: {},
+      en: {
+        'Истории в кадрах':'Stories in Frames','Комиксы':'Comics','О студии':'About','Соцсети':'Socials','Отзывы':'Reviews','Светлая тема':'Light theme','Тёмная тема':'Dark theme','Перейти к содержимому':'Skip to content','Независимая комикс-студия':'Independent comic studio','У каждой истории есть':'Every story has','свой мир.':'a world of its own.','Мы создаём комиксы, в которых оживают необычные герои, сложные выборы и вселенные, в которые хочется возвращаться. Выбирай историю и начинай читать.':'We create comics filled with unusual heroes, difficult choices and worlds you will want to revisit. Choose a story and start reading.','Исследовать комиксы':'Explore comics','Наше сообщество':'Our community','Твоя следующая история':'Your next story','Всего одна страница до приключения.':'Your next adventure is just one page away.','Библиотека SKX':'SKX Library','Наши комиксы':'Our Comics','Три разных мира — и у каждого свои тайны. Нажми на обложку, чтобы перейти к комиксу.':'Three different worlds, each with its own secrets. Select a cover to open a comic.','Кто мы':'Who we are','Маленькая студия.':'A small studio.','Большие вселенные.':'Big universes.','Наши соцсети':'Our Socials','Будь на связи':'Stay connected','Отзывы читателей':'Reader Reviews','Мнение сообщества':'Community voices','Поделись впечатлением':'Share your thoughts','Что говорят читатели':'What readers say','Имя или никнейм *':'Name or nickname *','Какой комикс? *':'Which comic? *','Оценка *':'Rating *','Твой отзыв *':'Your review *','Опубликовать отзыв':'Submit review','Все комиксы':'All comics','Вернуться наверх':'Back to top','CRYSTAL OF LIFE':'CRYSTAL OF LIFE','История начинается здесь':'The story begins here'
+      },
+      sk: {
+        'Истории в кадрах':'Príbehy v obrazoch','Комиксы':'Komiksy','О студии':'O štúdiu','Соцсети':'Sociálne siete','Отзывы':'Recenzie','Светлая тема':'Svetlý režim','Тёмная тема':'Tmavý režim','Перейти к содержимому':'Prejsť na obsah','Независимая комикс-студия':'Nezávislé komiksové štúdio','У каждой истории есть':'Každý príbeh má','свой мир.':'svoj vlastný svet.','Мы создаём комиксы, в которых оживают необычные герои, сложные выборы и вселенные, в которые хочется возвращаться. Выбирай историю и начинай читать.':'Tvoríme komiksy s neobyčajnými hrdinami, ťažkými rozhodnutiami a svetmi, do ktorých sa chcete vracať. Vyberte si príbeh a začnite čítať.','Исследовать комиксы':'Preskúmať komiksy','Наше сообщество':'Naša komunita','Твоя следующая история':'Tvoj ďalší príbeh','Всего одна страница до приключения.':'Od dobrodružstva ťa delí jediná stránka.','Библиотека SKX':'Knižnica SKX','Наши комиксы':'Naše komiksy','Три разных мира — и у каждого свои тайны. Нажми на обложку, чтобы перейти к комиксу.':'Tri rôzne svety, každý so svojimi tajomstvami. Kliknutím na obálku otvoríte komiks.','Кто мы':'Kto sme','Маленькая студия.':'Malé štúdio.','Большие вселенные.':'Veľké vesmíry.','Наши соцсети':'Naše sociálne siete','Будь на связи':'Zostaňte v kontakte','Отзывы читателей':'Recenzie čitateľov','Мнение сообщества':'Názory komunity','Поделись впечатлением':'Podeľte sa o dojem','Что говорят читатели':'Čo hovoria čitatelia','Имя или никнейм *':'Meno alebo prezývka *','Какой комикс? *':'Ktorý komiks? *','Оценка *':'Hodnotenie *','Твой отзыв *':'Vaša recenzia *','Опубликовать отзыв':'Odoslať recenziu','Все комиксы':'Všetky komiksy','Вернуться наверх':'Späť nahor','История начинается здесь':'Príbeh sa začína tu'
+      }
+    };
+    const originalTexts = new Map();
+    function translatePage(lang) {
+      document.documentElement.lang = lang === 'sk' ? 'sk' : lang;
+      document.title = lang === 'en' ? 'SKX Studio — Comics and Stories' : lang === 'sk' ? 'SKX Studio — Komiksy a príbehy' : 'SKX Studio — комиксы и истории';
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(node => {
+        if (!originalTexts.has(node)) originalTexts.set(node, node.nodeValue);
+        const original = originalTexts.get(node);
+        let result = original;
+        if (lang !== 'ru') {
+          const dict = translations[lang];
+          Object.entries(dict).sort((a,b)=>b[0].length-a[0].length).forEach(([from,to]) => { result = result.replace(from,to); });
+        }
+        node.nodeValue = result;
+      });
+      const select = document.getElementById('languageSelect');
+      try { localStorage.setItem('skxLanguage', lang); } catch(e) {}
+    }
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.addEventListener('change', () => translatePage(languageSelect.value));
+    try { languageSelect.value = localStorage.getItem('skxLanguage') || 'ru'; } catch(e) { languageSelect.value = 'ru'; }
+    translatePage(languageSelect.value);
 
     document.getElementById("year").textContent = new Date().getFullYear();
     renderReviews();
