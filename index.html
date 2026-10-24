@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>skx studios | Portfolio & Comics</title>
-    <meta name="description" content="Официальный сайт skx studios. Комиксы Crystal of Life Beginning, соцсети и отзывы.">
+    <meta name="description" content="Официальный сайт skx studios. Комиксы Crystal of Life Beginning и соцсети.">
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,10 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
         :root {
@@ -27,7 +23,6 @@
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --danger-color: #ef4444;
             --card-hover-transform: translateY(-6px);
         }
 
@@ -245,181 +240,7 @@
             color: var(--primary-orange);
         }
 
-        /* Summary Rating Score Card */
-        .rating-summary-card {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 600px;
-        }
-
-        .rating-score-value {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--primary-orange);
-            line-height: 1;
-        }
-
-        .rating-score-details {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .rating-stars-summary {
-            color: var(--primary-orange);
-            font-size: 1.2rem;
-        }
-
-        .rating-count-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Reviews Section */
-        .reviews-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .review-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 600px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            color: var(--text-main);
-            outline: none;
-        }
-
-        .form-input:focus, .form-textarea:focus {
-            border-color: var(--primary-orange);
-        }
-
-        .website-field-hp {
-            display: none !important;
-        }
-
-        .star-rating {
-            display: flex;
-            gap: 8px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .star-rating .fa-star.active {
-            color: var(--primary-orange);
-        }
-
-        .btn-submit {
-            background: var(--primary-orange);
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            align-self: flex-start;
-            transition: background 0.2s ease, opacity 0.2s ease;
-        }
-
-        .btn-submit:hover:not(:disabled) {
-            background: var(--primary-orange-hover);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .reviews-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .review-item {
-            padding: 18px 20px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            position: relative;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .review-author-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .review-author {
-            font-weight: 700;
-        }
-
-        .badge-own {
-            font-size: 0.75rem;
-            background: var(--primary-orange);
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .review-stars {
-            color: var(--primary-orange);
-            font-size: 0.9rem;
-        }
-
-        .review-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .btn-delete-review {
-            background: transparent;
-            border: none;
-            color: var(--danger-color);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s ease;
-        }
-
-        .btn-delete-review:hover {
-            background: rgba(239, 68, 68, 0.15);
-        }
-
+        /* Responsive Breakpoints */
         @media (max-width: 900px) {
             .comics-grid {
                 grid-template-columns: repeat(1, 1fr);
@@ -509,148 +330,37 @@
                 </a>
             </div>
         </section>
-
-        <!-- Секция Отзывы -->
-        <section id="reviews" class="glass-panel">
-            <h2 class="section-title" data-i18n="reviewsTitle">отзывы</h2>
-            
-            <!-- Карточка среднего рейтинга -->
-            <div class="rating-summary-card glass-panel">
-                <div class="rating-score-value" id="avgRatingScore">0.0</div>
-                <div class="rating-score-details">
-                    <div class="rating-stars-summary" id="avgRatingStars">
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </div>
-                    <span class="rating-count-text" id="ratingCountText">Загрузка отзывов...</span>
-                </div>
-            </div>
-
-            <div class="reviews-container">
-                <!-- Форма отправки отзыва -->
-                <form id="reviewForm" class="review-form">
-                    <input type="text" name="website" class="website-field-hp" tabindex="-1" autocomplete="off">
-
-                    <div class="form-group">
-                        <label for="authorInput" data-i18n="nameLabel">Ваше имя:</label>
-                        <input type="text" id="authorInput" class="form-input" required maxlength="30">
-                    </div>
-
-                    <div class="form-group">
-                        <label data-i18n="ratingLabel">Оценка:</label>
-                        <div class="star-rating" id="starRating">
-                            <i class="fa-solid fa-star active" data-rating="1"></i>
-                            <i class="fa-solid fa-star active" data-rating="2"></i>
-                            <i class="fa-solid fa-star active" data-rating="3"></i>
-                            <i class="fa-solid fa-star active" data-rating="4"></i>
-                            <i class="fa-solid fa-star active" data-rating="5"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="textInput" data-i18n="reviewLabel">Ваш отзыв:</label>
-                        <textarea id="textInput" class="form-textarea" rows="4" required minlength="5" maxlength="500"></textarea>
-                    </div>
-
-                    <button type="submit" id="submitReviewBtn" class="btn-submit" data-i18n="submitBtn">Оставить отзыв</button>
-                </form>
-
-                <!-- Список отзывов -->
-                <div class="reviews-list" id="reviewsList"></div>
-            </div>
-        </section>
     </main>
 
     <script>
-        // --- 1. Настройки Firebase (Замените своими данными из Firebase Console) ---
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-        } catch (e) {
-            console.error("Firebase init error:", e);
-        }
-        const database = firebase.database();
-        const reviewsRef = database.ref('reviews');
-
-        // --- 2. Генерация или получение Device ID ---
-        function getDeviceId() {
-            let devId = localStorage.getItem('skx_device_id');
-            if (!devId) {
-                devId = 'dev_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-                localStorage.setItem('skx_device_id', devId);
-            }
-            return devId;
-        }
-        const currentDeviceId = getDeviceId();
-
-        // --- 3. Перевод и Локализация ---
+        // --- Локализация (Перевод интерфейса) ---
         const translations = {
             ru: {
                 comicsTitle: "наши комиксы",
                 langSk: "Словацкий перевод",
                 langRu: "Оригинал русский",
                 langEn: "Английский перевод",
-                socialsTitle: "наши соцсети",
-                reviewsTitle: "отзывы",
-                nameLabel: "Ваше имя:",
-                ratingLabel: "Оценка:",
-                reviewLabel: "Ваш отзыв:",
-                submitBtn: "Оставить отзыв",
-                alreadySubmitted: "Вы уже оставили отзыв",
-                badgeOwn: "Ваш отзыв",
-                countText: "Оценок: "
+                socialsTitle: "наши соцсети"
             },
             en: {
                 comicsTitle: "our comics",
                 langSk: "Slovak translation",
                 langRu: "Russian original",
                 langEn: "English translation",
-                socialsTitle: "our social media",
-                reviewsTitle: "reviews",
-                nameLabel: "Your name:",
-                ratingLabel: "Rating:",
-                reviewLabel: "Your review:",
-                submitBtn: "Submit review",
-                alreadySubmitted: "You have already left a review",
-                badgeOwn: "Your review",
-                countText: "Ratings: "
+                socialsTitle: "our social media"
             },
             sk: {
                 comicsTitle: "naše komiksy",
                 langSk: "Slovenský preklad",
                 langRu: "Ruský originál",
                 langEn: "Anglický preklad",
-                socialsTitle: "naše sociálne siete",
-                reviewsTitle: "recenzie",
-                nameLabel: "Vaše meno:",
-                ratingLabel: "Hodnotenie:",
-                reviewLabel: "Vaša recenzia:",
-                submitBtn: "Odoslať recenziu",
-                alreadySubmitted: "Už ste zanechali recenziu",
-                badgeOwn: "Vaša recenzia",
-                countText: "Hodnotení: "
+                socialsTitle: "naše sociálne siete"
             }
         };
 
         const langSelect = document.getElementById('langSelect');
-        let currentLang = 'ru';
-
+        
         function changeLanguage(lang) {
-            currentLang = lang;
             const dictionary = translations[lang] || translations.ru;
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
@@ -665,7 +375,7 @@
             changeLanguage(e.target.value);
         });
 
-        // --- 4. Переключение Темы ---
+        // --- Переключение Темы ---
         const themeToggleBtn = document.getElementById('themeToggle');
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -674,193 +384,6 @@
             themeToggleBtn.innerHTML = newTheme === 'dark' 
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
-        });
-
-        // --- 5. Выбор оценок звёздами ---
-        const starContainer = document.getElementById('starRating');
-        let currentSelectedRating = 5;
-
-        starContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('fa-star')) {
-                currentSelectedRating = parseInt(e.target.getAttribute('data-rating'));
-                updateStars(currentSelectedRating);
-            }
-        });
-
-        function updateStars(rating) {
-            const stars = starContainer.querySelectorAll('.fa-star');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-            });
-        }
-
-        // --- 6. Функция обновления блока среднего рейтинга ---
-        function updateAverageRatingDisplay(reviewsArray) {
-            const avgRatingScore = document.getElementById('avgRatingScore');
-            const avgRatingStars = document.getElementById('avgRatingStars');
-            const ratingCountText = document.getElementById('ratingCountText');
-
-            if (!reviewsArray || reviewsArray.length === 0) {
-                avgRatingScore.textContent = "0.0";
-                avgRatingStars.innerHTML = `
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>`;
-                ratingCountText.textContent = (translations[currentLang].countText || "Оценок: ") + "0";
-                return;
-            }
-
-            const totalScore = reviewsArray.reduce((acc, curr) => acc + (curr.rating || 5), 0);
-            const average = (totalScore / reviewsArray.length).toFixed(1);
-
-            avgRatingScore.textContent = `${average}`;
-            ratingCountText.textContent = `${translations[currentLang].countText || "Оценок: "} ${reviewsArray.length}`;
-
-            let starsHtml = '';
-            const numericAvg = parseFloat(average);
-            for (let i = 1; i <= 5; i++) {
-                if (numericAvg >= i) {
-                    starsHtml += `<i class="fa-solid fa-star"></i>`;
-                } else if (numericAvg >= i - 0.5) {
-                    starsHtml += `<i class="fa-solid fa-star-half-stroke"></i>`;
-                } else {
-                    starsHtml += `<i class="fa-regular fa-star"></i>`;
-                }
-            }
-            avgRatingStars.innerHTML = starsHtml;
-        }
-
-        // --- 7. Отслеживание базы данных и рендеринг отзывов ---
-        const reviewForm = document.getElementById('reviewForm');
-        const submitBtn = document.getElementById('submitReviewBtn');
-        const reviewsList = document.getElementById('reviewsList');
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        reviewsRef.on('value', (snapshot) => {
-            const data = snapshot.val();
-            reviewsList.innerHTML = '';
-
-            if (!data) {
-                updateAverageRatingDisplay([]);
-                enableReviewForm();
-                return;
-            }
-
-            const entries = Object.entries(data);
-            const reviewsArray = entries.map(([key, val]) => ({ id: key, ...val }));
-            reviewsArray.sort((a, b) => b.timestamp - a.timestamp);
-
-            updateAverageRatingDisplay(reviewsArray);
-
-            const userHasSubmitted = reviewsArray.some(item => item.deviceId === currentDeviceId);
-            if (userHasSubmitted) {
-                disableReviewForm();
-            } else {
-                enableReviewForm();
-            }
-
-            reviewsArray.forEach(item => {
-                const isOwn = item.deviceId === currentDeviceId;
-                const reviewEl = document.createElement('article');
-                reviewEl.className = 'review-item glass-panel';
-
-                let starsHtml = '';
-                for (let i = 0; i < 5; i++) {
-                    starsHtml += `<i class="fa-solid fa-star${i < item.rating ? '' : '-o'}" style="color: var(--primary-orange)"></i>`;
-                }
-
-                const ownBadge = isOwn ? `<span class="badge-own">${translations[currentLang].badgeOwn || "Ваш отзыв"}</span>` : '';
-                const deleteButton = isOwn 
-                    ? `<button class="btn-delete-review" onclick="deleteReview('${item.id}')" title="Удалить мой отзыв"><i class="fa-solid fa-trash"></i></button>` 
-                    : '';
-
-                reviewEl.innerHTML = `
-                    <div class="review-header">
-                        <div class="review-author-box">
-                            <span class="review-author">${escapeHtml(item.author)}</span>
-                            ${ownBadge}
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div class="review-stars">${starsHtml}</div>
-                            ${deleteButton}
-                        </div>
-                    </div>
-                    <p class="review-text">${escapeHtml(item.text)}</p>
-                `;
-                reviewsList.appendChild(reviewEl);
-            });
-        });
-
-        function disableReviewForm() {
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = translations[currentLang].alreadySubmitted || "Вы уже оставили отзыв";
-            }
-            const authorInput = document.getElementById('authorInput');
-            const textInput = document.getElementById('textInput');
-            if (authorInput) authorInput.disabled = true;
-            if (textInput) textInput.disabled = true;
-        }
-
-        function enableReviewForm() {
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = translations[currentLang].submitBtn || "Оставить отзыв";
-            }
-            const authorInput = document.getElementById('authorInput');
-            const textInput = document.getElementById('textInput');
-            if (authorInput) authorInput.disabled = false;
-            if (textInput) textInput.disabled = false;
-        }
-
-        window.deleteReview = function(reviewId) {
-            if (confirm("Вы уверены, что хотите удалить свой отзыв?")) {
-                database.ref('reviews/' + reviewId).remove()
-                    .then(() => {
-                        enableReviewForm();
-                    })
-                    .catch((err) => {
-                        alert("Ошибка при удалении: " + err.message);
-                    });
-            }
-        };
-
-        reviewForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const hpField = reviewForm.querySelector('.website-field-hp').value;
-            if (hpField) return;
-
-            const author = document.getElementById('authorInput').value.trim();
-            const text = document.getElementById('textInput').value.trim();
-
-            if (!author || !text || text.length < 5) return;
-
-            const newReviewRef = reviewsRef.push();
-            newReviewRef.set({
-                deviceId: currentDeviceId,
-                author: author,
-                rating: currentSelectedRating,
-                text: text,
-                timestamp: Date.now()
-            }).then(() => {
-                reviewForm.reset();
-                updateStars(5);
-                currentSelectedRating = 5;
-            }).catch((err) => {
-                alert("Ошибка соединения с базой: " + err.message);
-            });
         });
     </script>
 </body>
