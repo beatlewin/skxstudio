@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK (для глобального сохранения отзывов) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
@@ -27,6 +27,7 @@
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
+            --danger-color: #ef4444;
             --card-hover-transform: translateY(-6px);
         }
 
@@ -61,7 +62,7 @@
             background-attachment: fixed;
         }
 
-        /* Glassmorphism Reusable Class */
+        /* Glassmorphism Panel */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -244,30 +245,18 @@
             color: var(--primary-orange);
         }
 
-        /* Reviews Section */
-        .reviews-container {
+        /* Summary Rating Score Card */
+        .rating-summary-card {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .review-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 12px;
             max-width: 600px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .form-input, .form-textarea {
-            width
+        .rating-score-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            line-height
