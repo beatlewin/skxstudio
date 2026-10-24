@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>skx studios | Portfolio & Comics</title>
-    <meta name="description" content="Официальный сайт skx studios. Комиксы Crystal of Life Beginning и соцсети.">
+    <meta name="description" content="Официальный сайт skx studios. Комиксы Crystal of Life Beginning, соцсети и партнеры.">
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -240,52 +240,45 @@
             color: var(--primary-orange);
         }
 
-        /* Ads Grid & Animation Styles */
-        .ads-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+        /* Partners / Animated Slider Section Styling */
+        .partners-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .ad-card {
+        .animated-banner-link {
             display: block;
-            text-decoration: none;
+            width: 100%;
+            max-width: 700px;
+            aspect-ratio: 16 / 7;
             border-radius: 12px;
             overflow: hidden;
-            border: 2px solid var(--glass-border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
-            animation: pulse-border 4s infinite alternate;
+            position: relative;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .ad-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .ad-card:hover {
-            transform: translateY(-8px) scale(1.02);
+        .animated-banner-link:hover {
+            transform: var(--card-hover-transform);
             border-color: var(--primary-orange);
-            box-shadow: 0 12px 30px rgba(245, 134, 49, 0.25);
         }
 
-        .ad-card:hover .ad-image {
-            transform: scale(1.03);
+        .animated-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
 
-        @keyframes pulse-border {
-            0% {
-                border-color: rgba(255, 255, 255, 0.12);
-            }
-            50% {
-                border-color: rgba(245, 134, 49, 0.4);
-            }
-            100% {
-                border-color: rgba(255, 255, 255, 0.12);
-            }
+        .animated-slide.active {
+            opacity: 1;
         }
 
         /* Responsive Breakpoints */
@@ -295,9 +288,6 @@
             }
             .socials-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .ads-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -317,7 +307,7 @@
     <!-- Header Block -->
     <header class="glass-panel">
         <div class="brand-container">
-            <img src="photo_2026-09-20_20-33-19.jpg" alt="skx studios logo" class="brand-logo">
+            <img src="photo_2026-09-20_20-33-19.jpg" alt="skx studios logo" class="brand-logo" />
             <span class="brand-title">skx studios</span>
         </div>
         <div class="controls-container">
@@ -341,19 +331,19 @@
             <div class="comics-grid">
                 <!-- 1. Словацкий перевод -->
                 <a href="https://drive.google.com/file/d/1L_jaycT3IuYxdUVjdVVwOBELniZ0B92M/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на словацком">
-                    <img src="Gemini_Generated_Image_w6hxxyw6hxxyw6hx.jpg" alt="Crystal of Life - Словацкий перевод" class="comic-cover">
+                    <img src="Gemini_Generated_Image_w6hxxyw6hxxyw6hx.jpg" alt="Crystal of Life - Словацкий перевод" class="comic-cover" />
                     <span class="comic-lang-tag" data-i18n="langSk">Словацкий перевод</span>
                 </a>
 
                 <!-- 2. Оригинал русский -->
                 <a href="https://drive.google.com/file/d/1RNSw5RQs8plFY8zsPp5hLYLBNzVt6SXX/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на русском">
-                    <img src="Gemini_Generated_Image_n8615yn8615yn861.jpg" alt="Кристалл Жизни - Русский оригинал" class="comic-cover">
+                    <img src="Gemini_Generated_Image_n8615yn8615yn861.jpg" alt="Кристалл Жизни - Русский оригинал" class="comic-cover" />
                     <span class="comic-lang-tag" data-i18n="langRu">Оригинал русский</span>
                 </a>
 
                 <!-- 3. Английский перевод -->
                 <a href="https://drive.google.com/file/d/1NYwKWTMcZ6Z6_anL5emFy-Rki1bvLdJ9/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на английском">
-                    <img src="Gemini_Generated_Image_r1gzwir1gzwir1gz.jpg" alt="Crystal of Life - Английский перевод" class="comic-cover">
+                    <img src="Gemini_Generated_Image_r1gzwir1gzwir1gz.jpg" alt="Crystal of Life - Английский перевод" class="comic-cover" />
                     <span class="comic-lang-tag" data-i18n="langEn">Английский перевод</span>
                 </a>
             </div>
@@ -382,18 +372,15 @@
             </div>
         </section>
 
-        <!-- Секция Реклама -->
-        <section id="ads" class="glass-panel">
-            <h2 class="section-title" data-i18n="adsTitle">реклама</h2>
-            <div class="ads-grid">
-                <!-- 1 Рекламный баннер -->
-                <a href="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" target="_blank" rel="noopener noreferrer" class="ad-card" aria-label="Реклама TStudios">
-                    <img src="image_8b13c3.jpg" alt="TStudios Banner" class="ad-image">
-                </a>
-
-                <!-- 2 Рекламный баннер -->
-                <a href="https://millida.net/launcher" target="_blank" rel="noopener noreferrer" class="ad-card" aria-label="Реклама Millida Launcher">
-                    <img src="image_8b13de.jpg" alt="Millida Launcher Banner" class="ad-image">
+        <!-- Секция с анимированным слайдером картинок (в самом низу) -->
+        <section id="partners" class="glass-panel">
+            <h2 class="section-title" data-i18n="partnersTitle">наши проекты и партнеры</h2>
+            <div class="partners-container">
+                <a id="animatedBannerLink" href="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" target="_blank" rel="noopener noreferrer" class="animated-banner-link">
+                    <!-- 1 картинка (image_8b13c3.jpg) -->
+                    <img src="image_8b13c3.jpg" alt="TStudios" class="animated-slide active" data-index="0" data-url="https://timoshamoscow.github.io/tstudios/?ref=Timosha_Moscow" />
+                    <!-- 2 картинка (image_8b13de.jpg) -->
+                    <img src="image_8b13de.jpg" alt="Millida Launcher" class="animated-slide" data-index="1" data-url="https://millida.net/launcher" />
                 </a>
             </div>
         </section>
@@ -408,7 +395,7 @@
                 langRu: "Оригинал русский",
                 langEn: "Английский перевод",
                 socialsTitle: "наши соцсети",
-                adsTitle: "реклама"
+                partnersTitle: "наши проекты и партнеры"
             },
             en: {
                 comicsTitle: "our comics",
@@ -416,7 +403,7 @@
                 langRu: "Russian original",
                 langEn: "English translation",
                 socialsTitle: "our social media",
-                adsTitle: "advertising"
+                partnersTitle: "our projects and partners"
             },
             sk: {
                 comicsTitle: "naše komiksy",
@@ -424,7 +411,7 @@
                 langRu: "Ruský originál",
                 langEn: "Anglický preklad",
                 socialsTitle: "naše sociálne siete",
-                adsTitle: "reklama"
+                partnersTitle: "naše projekty a partneri"
             }
         };
 
@@ -455,6 +442,24 @@
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
         });
+
+        // --- Логика анимированного слайдера и динамической смены ссылок ---
+        const slides = document.querySelectorAll('.animated-slide');
+        const bannerLink = document.getElementById('animatedBannerLink');
+        let currentIndex = 0;
+
+        function switchSlide() {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            const activeSlide = slides[currentIndex];
+            activeSlide.classList.add('active');
+            
+            // Динамически меняем ссылку в зависимости от текущей отображаемой картинки
+            bannerLink.href = activeSlide.getAttribute('data-url');
+        }
+
+        // Переключение картинок каждые 4 секунды
+        setInterval(switchSlide, 4000);
     </script>
 </body>
 </html>
