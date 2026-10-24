@@ -13,6 +13,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --primary-orange: #f58631;
@@ -23,6 +27,7 @@
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
+            --danger-color: #ef4444;
             --card-hover-transform: translateY(-6px);
         }
 
@@ -57,7 +62,7 @@
             background-attachment: fixed;
         }
 
-        /* Glassmorphism Reusable Class */
+        /* Glassmorphism Panel */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -240,6 +245,39 @@
             color: var(--primary-orange);
         }
 
+        /* Summary Rating Score Card */
+        .rating-summary-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+        }
+
+        .rating-score-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            line-height: 1;
+        }
+
+        .rating-score-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .rating-stars-summary {
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+        }
+
+        .rating-count-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
         /* Reviews Section */
         .reviews-container {
             display: flex;
@@ -279,7 +317,6 @@
             border-color: var(--primary-orange);
         }
 
-        /* Anti-bot hidden field */
         .website-field-hp {
             display: none !important;
         }
@@ -305,11 +342,16 @@
             font-weight: 700;
             cursor: pointer;
             align-self: flex-start;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, opacity 0.2s ease;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover:not(:disabled) {
             background: var(--primary-orange-hover);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .reviews-list {
@@ -319,11 +361,12 @@
         }
 
         .review-item {
-            padding: 15px 20px;
+            padding: 18px 20px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            position: relative;
         }
 
         .review-header {
@@ -332,8 +375,23 @@
             align-items: center;
         }
 
+        .review-author-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .review-author {
             font-weight: 700;
+        }
+
+        .badge-own {
+            font-size: 0.75rem;
+            background: var(--primary-orange);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
         }
 
         .review-stars {
@@ -347,7 +405,21 @@
             line-height: 1.4;
         }
 
-        /* Responsive Layout Breakpoints */
+        .btn-delete-review {
+            background: transparent;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-delete-review:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
         @media (max-width: 900px) {
             .comics-grid {
                 grid-template-columns: repeat(1, 1fr);
@@ -373,18 +445,15 @@
     <!-- Header Block -->
     <header class="glass-panel">
         <div class="brand-container">
-            <!-- Логотип студии (лг1 -> photo_2026-09-20_20-33-19.jpg) -->
             <img src="photo_2026-09-20_20-33-19.jpg" alt="skx studios logo" class="brand-logo">
             <span class="brand-title">skx studios</span>
         </div>
         <div class="controls-container">
-            <!-- Переключатель языков -->
             <select id="langSelect" class="btn-control" aria-label="выберите язык">
                 <option value="ru">Русский</option>
                 <option value="en">English</option>
                 <option value="sk">Slovenský</option>
             </select>
-            <!-- Смена темы -->
             <button id="themeToggle" class="btn-control" aria-label="смена темы">
                 <i class="fa-solid fa-moon"></i>
             </button>
@@ -398,20 +467,20 @@
             <h3 class="section-subtitle">Crystal of Life Beginning</h3>
             
             <div class="comics-grid">
-                <!-- 1. Словацкий перевод (лг2 -> Gemini_Generated_Image_w6hxxyw6hxxyw6hx.jpg) -->
-                <a href="#read-sk" class="comic-card glass-panel" aria-label="Читать комикс на словацком">
+                <!-- 1. Словацкий перевод -->
+                <a href="https://drive.google.com/file/d/1L_jaycT3IuYxdUVjdVVwOBELniZ0B92M/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на словацком">
                     <img src="Gemini_Generated_Image_w6hxxyw6hxxyw6hx.jpg" alt="Crystal of Life - Словацкий перевод" class="comic-cover">
                     <span class="comic-lang-tag" data-i18n="langSk">Словацкий перевод</span>
                 </a>
 
-                <!-- 2. Оригинал русский (лг3 -> Gemini_Generated_Image_n8615yn8615yn861.jpg) -->
-                <a href="#read-ru" class="comic-card glass-panel" aria-label="Читать комикс на русском">
+                <!-- 2. Оригинал русский -->
+                <a href="https://drive.google.com/file/d/1RNSw5RQs8plFY8zsPp5hLYLBNzVt6SXX/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на русском">
                     <img src="Gemini_Generated_Image_n8615yn8615yn861.jpg" alt="Кристалл Жизни - Русский оригинал" class="comic-cover">
                     <span class="comic-lang-tag" data-i18n="langRu">Оригинал русский</span>
                 </a>
 
-                <!-- 3. Английский перевод (лг4 -> Gemini_Generated_Image_r1gzwir1gzwir1gz.jpg) -->
-                <a href="#read-en" class="comic-card glass-panel" aria-label="Читать комикс на английском">
+                <!-- 3. Английский перевод -->
+                <a href="https://drive.google.com/file/d/1NYwKWTMcZ6Z6_anL5emFy-Rki1bvLdJ9/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="comic-card glass-panel" aria-label="Читать комикс на английском">
                     <img src="Gemini_Generated_Image_r1gzwir1gzwir1gz.jpg" alt="Crystal of Life - Английский перевод" class="comic-cover">
                     <span class="comic-lang-tag" data-i18n="langEn">Английский перевод</span>
                 </a>
@@ -422,19 +491,19 @@
         <section id="socials" class="glass-panel">
             <h2 class="section-title" data-i18n="socialsTitle">наши соцсети</h2>
             <div class="socials-grid">
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
+                <a href="https://www.youtube.com/channel/UCadik35hfR6fVj7n4XpMJYQ" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
                     <i class="fa-brands fa-youtube"></i>
                     <span>YouTube</span>
                 </a>
-                <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
+                <a href="https://t.me/Kstudioorgcom123" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
                     <i class="fa-brands fa-telegram"></i>
                     <span>Telegram</span>
                 </a>
-                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
+                <a href="https://discord.gg/zCcMy2qeRy" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
                     <i class="fa-brands fa-discord"></i>
                     <span>Discord</span>
                 </a>
-                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
+                <a href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUlxb01IYlFIcUVvN3lsTHZfek5WRFU0MjNvWXxBSTVJdTV0MXBRNEJSTHlWeG95c2Nxa0FiTkFRV0dCVm9TbWs5aUJ4ZkNTbjR1OWQxdmx3MEZ2UFlUTTNDWTdabFhkNzNWUjZwRGNFMFJqTkpDdDR5TmM2Y0ZkNEx5dm1qVDJP&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029Vb8hV7Z0LKZExcIOf71i" target="_blank" rel="noopener noreferrer" class="social-link glass-panel">
                     <i class="fa-brands fa-whatsapp"></i>
                     <span>WhatsApp</span>
                 </a>
@@ -445,10 +514,24 @@
         <section id="reviews" class="glass-panel">
             <h2 class="section-title" data-i18n="reviewsTitle">отзывы</h2>
             
+            <!-- Карточка среднего рейтинга -->
+            <div class="rating-summary-card glass-panel">
+                <div class="rating-score-value" id="avgRatingScore">0.0</div>
+                <div class="rating-score-details">
+                    <div class="rating-stars-summary" id="avgRatingStars">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                    <span class="rating-count-text" id="ratingCountText">Загрузка отзывов...</span>
+                </div>
+            </div>
+
             <div class="reviews-container">
                 <!-- Форма отправки отзыва -->
                 <form id="reviewForm" class="review-form">
-                    <!-- Honeypot антибот поле -->
                     <input type="text" name="website" class="website-field-hp" tabindex="-1" autocomplete="off">
 
                     <div class="form-group">
@@ -472,19 +555,49 @@
                         <textarea id="textInput" class="form-textarea" rows="4" required minlength="5" maxlength="500"></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit" data-i18n="submitBtn">Оставить отзыв</button>
+                    <button type="submit" id="submitReviewBtn" class="btn-submit" data-i18n="submitBtn">Оставить отзыв</button>
                 </form>
 
                 <!-- Список отзывов -->
-                <div class="reviews-list" id="reviewsList">
-                    <!-- Заполняется динамически скриптом -->
-                </div>
+                <div class="reviews-list" id="reviewsList"></div>
             </div>
         </section>
     </main>
 
     <script>
-        // --- 1. Словари локализации (i18n) ---
+        // --- 1. Настройки Firebase (Замените своими данными из Firebase Console) ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+        } catch (e) {
+            console.error("Firebase init error:", e);
+        }
+        const database = firebase.database();
+        const reviewsRef = database.ref('reviews');
+
+        // --- 2. Генерация или получение Device ID ---
+        function getDeviceId() {
+            let devId = localStorage.getItem('skx_device_id');
+            if (!devId) {
+                devId = 'dev_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+                localStorage.setItem('skx_device_id', devId);
+            }
+            return devId;
+        }
+        const currentDeviceId = getDeviceId();
+
+        // --- 3. Перевод и Локализация ---
         const translations = {
             ru: {
                 comicsTitle: "наши комиксы",
@@ -496,7 +609,10 @@
                 nameLabel: "Ваше имя:",
                 ratingLabel: "Оценка:",
                 reviewLabel: "Ваш отзыв:",
-                submitBtn: "Оставить отзыв"
+                submitBtn: "Оставить отзыв",
+                alreadySubmitted: "Вы уже оставили отзыв",
+                badgeOwn: "Ваш отзыв",
+                countText: "Оценок: "
             },
             en: {
                 comicsTitle: "our comics",
@@ -508,7 +624,10 @@
                 nameLabel: "Your name:",
                 ratingLabel: "Rating:",
                 reviewLabel: "Your review:",
-                submitBtn: "Submit review"
+                submitBtn: "Submit review",
+                alreadySubmitted: "You have already left a review",
+                badgeOwn: "Your review",
+                countText: "Ratings: "
             },
             sk: {
                 comicsTitle: "naše komiksy",
@@ -520,14 +639,18 @@
                 nameLabel: "Vaše meno:",
                 ratingLabel: "Hodnotenie:",
                 reviewLabel: "Vaša recenzia:",
-                submitBtn: "Odoslať recenziu"
+                submitBtn: "Odoslať recenziu",
+                alreadySubmitted: "Už ste zanechali recenziu",
+                badgeOwn: "Vaša recenzia",
+                countText: "Hodnotení: "
             }
         };
 
-        // --- 2. Логика переключения языков ---
         const langSelect = document.getElementById('langSelect');
-        
+        let currentLang = 'ru';
+
         function changeLanguage(lang) {
+            currentLang = lang;
             const dictionary = translations[lang] || translations.ru;
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
@@ -542,7 +665,7 @@
             changeLanguage(e.target.value);
         });
 
-        // --- 3. Переключение светлой/темной темы ---
+        // --- 4. Переключение Темы ---
         const themeToggleBtn = document.getElementById('themeToggle');
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -553,7 +676,7 @@
                 : '<i class="fa-solid fa-sun"></i>';
         });
 
-        // --- 4. Интерактивная рейтинговая система (Звезды) ---
+        // --- 5. Выбор оценок звёздами ---
         const starContainer = document.getElementById('starRating');
         let currentSelectedRating = 5;
 
@@ -575,34 +698,48 @@
             });
         }
 
-        // --- 5. Управление отзывами и защита от ботов ---
-        const reviewForm = document.getElementById('reviewForm');
-        const reviewsList = document.getElementById('reviewsList');
-        let lastSubmissionTime = 0;
+        // --- 6. Функция обновления блока среднего рейтинга ---
+        function updateAverageRatingDisplay(reviewsArray) {
+            const avgRatingScore = document.getElementById('avgRatingScore');
+            const avgRatingStars = document.getElementById('avgRatingStars');
+            const ratingCountText = document.getElementById('ratingCountText');
 
-        function renderReviews() {
-            const storedReviews = JSON.parse(localStorage.getItem('skx_reviews') || '[]');
-            reviewsList.innerHTML = '';
+            if (!reviewsArray || reviewsArray.length === 0) {
+                avgRatingScore.textContent = "0.0";
+                avgRatingStars.innerHTML = `
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>`;
+                ratingCountText.textContent = (translations[currentLang].countText || "Оценок: ") + "0";
+                return;
+            }
 
-            storedReviews.forEach(item => {
-                const reviewEl = document.createElement('article');
-                reviewEl.className = 'review-item glass-panel';
-                
-                let starsHtml = '';
-                for (let i = 0; i < 5; i++) {
-                    starsHtml += `<i class="fa-solid fa-star${i < item.rating ? '' : '-o'}" style="color: var(--primary-orange)"></i>`;
+            const totalScore = reviewsArray.reduce((acc, curr) => acc + (curr.rating || 5), 0);
+            const average = (totalScore / reviewsArray.length).toFixed(1);
+
+            avgRatingScore.textContent = `${average}`;
+            ratingCountText.textContent = `${translations[currentLang].countText || "Оценок: "} ${reviewsArray.length}`;
+
+            let starsHtml = '';
+            const numericAvg = parseFloat(average);
+            for (let i = 1; i <= 5; i++) {
+                if (numericAvg >= i) {
+                    starsHtml += `<i class="fa-solid fa-star"></i>`;
+                } else if (numericAvg >= i - 0.5) {
+                    starsHtml += `<i class="fa-solid fa-star-half-stroke"></i>`;
+                } else {
+                    starsHtml += `<i class="fa-regular fa-star"></i>`;
                 }
-
-                reviewEl.innerHTML = `
-                    <div class="review-header">
-                        <span class="review-author">${escapeHtml(item.author)}</span>
-                        <div class="review-stars">${starsHtml}</div>
-                    </div>
-                    <p class="review-text">${escapeHtml(item.text)}</p>
-                `;
-                reviewsList.appendChild(reviewEl);
-            });
+            }
+            avgRatingStars.innerHTML = starsHtml;
         }
+
+        // --- 7. Отслеживание базы данных и рендеринг отзывов ---
+        const reviewForm = document.getElementById('reviewForm');
+        const submitBtn = document.getElementById('submitReviewBtn');
+        const reviewsList = document.getElementById('reviewsList');
 
         function escapeHtml(text) {
             const div = document.createElement('div');
@@ -610,49 +747,121 @@
             return div.innerHTML;
         }
 
+        reviewsRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            reviewsList.innerHTML = '';
+
+            if (!data) {
+                updateAverageRatingDisplay([]);
+                enableReviewForm();
+                return;
+            }
+
+            const entries = Object.entries(data);
+            const reviewsArray = entries.map(([key, val]) => ({ id: key, ...val }));
+            reviewsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            updateAverageRatingDisplay(reviewsArray);
+
+            const userHasSubmitted = reviewsArray.some(item => item.deviceId === currentDeviceId);
+            if (userHasSubmitted) {
+                disableReviewForm();
+            } else {
+                enableReviewForm();
+            }
+
+            reviewsArray.forEach(item => {
+                const isOwn = item.deviceId === currentDeviceId;
+                const reviewEl = document.createElement('article');
+                reviewEl.className = 'review-item glass-panel';
+
+                let starsHtml = '';
+                for (let i = 0; i < 5; i++) {
+                    starsHtml += `<i class="fa-solid fa-star${i < item.rating ? '' : '-o'}" style="color: var(--primary-orange)"></i>`;
+                }
+
+                const ownBadge = isOwn ? `<span class="badge-own">${translations[currentLang].badgeOwn || "Ваш отзыв"}</span>` : '';
+                const deleteButton = isOwn 
+                    ? `<button class="btn-delete-review" onclick="deleteReview('${item.id}')" title="Удалить мой отзыв"><i class="fa-solid fa-trash"></i></button>` 
+                    : '';
+
+                reviewEl.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author-box">
+                            <span class="review-author">${escapeHtml(item.author)}</span>
+                            ${ownBadge}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="review-stars">${starsHtml}</div>
+                            ${deleteButton}
+                        </div>
+                    </div>
+                    <p class="review-text">${escapeHtml(item.text)}</p>
+                `;
+                reviewsList.appendChild(reviewEl);
+            });
+        });
+
+        function disableReviewForm() {
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = translations[currentLang].alreadySubmitted || "Вы уже оставили отзыв";
+            }
+            const authorInput = document.getElementById('authorInput');
+            const textInput = document.getElementById('textInput');
+            if (authorInput) authorInput.disabled = true;
+            if (textInput) textInput.disabled = true;
+        }
+
+        function enableReviewForm() {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = translations[currentLang].submitBtn || "Оставить отзыв";
+            }
+            const authorInput = document.getElementById('authorInput');
+            const textInput = document.getElementById('textInput');
+            if (authorInput) authorInput.disabled = false;
+            if (textInput) textInput.disabled = false;
+        }
+
+        window.deleteReview = function(reviewId) {
+            if (confirm("Вы уверены, что хотите удалить свой отзыв?")) {
+                database.ref('reviews/' + reviewId).remove()
+                    .then(() => {
+                        enableReviewForm();
+                    })
+                    .catch((err) => {
+                        alert("Ошибка при удалении: " + err.message);
+                    });
+            }
+        };
+
         reviewForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Защита #1: Honeypot поле (если заполнено ботом — отклоняем)
             const hpField = reviewForm.querySelector('.website-field-hp').value;
-            if (hpField) {
-                return;
-            }
-
-            // Защита #2: Ограничение частоты отправки (Rate limit: 15 сек)
-            const now = Date.now();
-            if (now - lastSubmissionTime < 15000) {
-                alert("Пожалуйста, подождите перед отправкой следующего отзыва.");
-                return;
-            }
+            if (hpField) return;
 
             const author = document.getElementById('authorInput').value.trim();
             const text = document.getElementById('textInput').value.trim();
 
-            if (!author || !text || text.length < 5) {
-                return;
-            }
+            if (!author || !text || text.length < 5) return;
 
-            const newReview = {
+            const newReviewRef = reviewsRef.push();
+            newReviewRef.set({
+                deviceId: currentDeviceId,
                 author: author,
                 rating: currentSelectedRating,
                 text: text,
-                timestamp: now
-            };
-
-            const existingReviews = JSON.parse(localStorage.getItem('skx_reviews') || '[]');
-            existingReviews.unshift(newReview);
-            localStorage.setItem('skx_reviews', JSON.stringify(existingReviews));
-
-            lastSubmissionTime = now;
-            reviewForm.reset();
-            updateStars(5);
-            currentSelectedRating = 5;
-            renderReviews();
+                timestamp: Date.now()
+            }).then(() => {
+                reviewForm.reset();
+                updateStars(5);
+                currentSelectedRating = 5;
+            }).catch((err) => {
+                alert("Ошибка соединения с базой: " + err.message);
+            });
         });
-
-        // Начальная инициализация
-        renderReviews();
     </script>
 </body>
 </html>
