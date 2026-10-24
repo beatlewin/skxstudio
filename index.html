@@ -1,1 +1,737 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f58631">
+  <meta name="description" content="SKX Studio — независимая студия комиксов. Знакомьтесь с историями, следите за новостями и оставляйте отзывы.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SKX Studio — истории за пределами страниц">
+  <meta property="og:description" content="Откройте комиксы SKX Studio и присоединяйтесь к сообществу читателей.">
+  <title>SKX Studio — комиксы и истории</title>
 
+  <!-- Font Awesome: иконки интерфейса и социальных сетей -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --accent: #f58631;
+      --accent-hover: #ff9a4e;
+      --accent-soft: rgba(245, 134, 49, .15);
+      --page: #111116;
+      --page-secondary: #17171e;
+      --text: #f7f4f1;
+      --muted: #b0adb4;
+      --glass: rgba(255, 255, 255, .065);
+      --glass-strong: rgba(255, 255, 255, .095);
+      --glass-border: rgba(255, 255, 255, .13);
+      --input: rgba(12, 12, 17, .43);
+      --shadow: 0 18px 55px rgba(0, 0, 0, .23);
+      --radius: 24px;
+      --radius-small: 15px;
+      --max-width: 1160px;
+    }
+
+    body[data-theme="light"] {
+      color-scheme: light;
+      --page: #f5f2ef;
+      --page-secondary: #ebe6e1;
+      --text: #242126;
+      --muted: #69636c;
+      --glass: rgba(255, 255, 255, .58);
+      --glass-strong: rgba(255, 255, 255, .78);
+      --glass-border: rgba(49, 37, 28, .12);
+      --input: rgba(255, 255, 255, .76);
+      --shadow: 0 18px 55px rgba(76, 54, 36, .10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(ellipse at 8% 12%, rgba(245, 134, 49, .14), transparent 31rem),
+        radial-gradient(ellipse at 91% 34%, rgba(118, 87, 180, .12), transparent 28rem),
+        var(--page);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      transition: background-color .25s ease, color .25s ease;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      pointer-events: none;
+      opacity: .15;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    img, svg { max-width: 100%; }
+    ::selection { color: #171116; background: rgba(245, 134, 49, .55); }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .skip-link {
+      position: fixed; top: 10px; left: 10px; z-index: 1000;
+      padding: 10px 14px; border-radius: 10px; background: var(--accent); color: #21150d;
+      transform: translateY(-160%); transition: transform .2s ease; font-weight: 750;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .container { width: min(var(--max-width), calc(100% - 40px)); margin-inline: auto; }
+    .glass {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--glass-border);
+      background: color-mix(in srgb, var(--page) 74%, transparent);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    }
+    .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; min-width: max-content; text-decoration: none; }
+    .brand-mark {
+      display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px;
+      color: #20130b; font-size: 1.1rem; font-weight: 950; letter-spacing: -2px;
+      background: linear-gradient(145deg, #ffb36d, var(--accent));
+      box-shadow: 0 7px 22px rgba(245, 134, 49, .24); transform: rotate(-4deg);
+    }
+    .brand-copy { display: grid; line-height: 1.15; }
+    .brand-name { font-size: 1.02rem; font-weight: 850; letter-spacing: .05em; }
+    .brand-caption { margin-top: 5px; color: var(--muted); font-size: .7rem; letter-spacing: .13em; text-transform: uppercase; }
+    .main-nav { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 2.1vw, 28px); }
+    .main-nav a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 650; transition: color .2s ease; }
+    .main-nav a:hover, .main-nav a:focus-visible { color: var(--accent); }
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 42px; padding: 9px 13px; border: 1px solid var(--glass-border); border-radius: 999px;
+      background: var(--glass); cursor: pointer; transition: transform .2s ease, border-color .2s ease;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .theme-toggle i { color: var(--accent); }
+    .theme-toggle span { font-size: .84rem; font-weight: 700; }
+
+    .hero { padding: 76px 0 44px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 46px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; margin: 0 0 17px;
+      padding: 7px 12px; border: 1px solid rgba(245, 134, 49, .28); border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent); font-size: .78rem; font-weight: 800;
+      letter-spacing: .095em; text-transform: uppercase;
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(245, 134, 49, .12); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 690px; margin-bottom: 20px; font-size: clamp(2.55rem, 5vw, 4.7rem); line-height: 1.02; letter-spacing: -.065em; }
+    .accent-text { color: var(--accent); }
+    .hero-copy { max-width: 580px; margin-bottom: 28px; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.15rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px;
+      padding: 12px 19px; border: 1px solid transparent; border-radius: 14px; text-decoration: none;
+      font-weight: 800; cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #21150d; background: var(--accent); box-shadow: 0 8px 22px rgba(245, 134, 49, .2); }
+    .button-primary:hover { background: var(--accent-hover); }
+    .button-secondary { background: var(--glass); border-color: var(--glass-border); }
+    .button-secondary:hover { border-color: var(--accent); }
+    .hero-art { position: relative; min-height: 325px; display: grid; place-items: center; isolation: isolate; }
+    .hero-orbit { position: absolute; width: min(100%, 360px); aspect-ratio: 1; border: 1px solid rgba(245, 134, 49, .23); border-radius: 50%; transform: rotate(-18deg); }
+    .hero-orbit::before, .hero-orbit::after { content: ""; position: absolute; border: 1px solid var(--glass-border); border-radius: 50%; inset: 24px; }
+    .hero-orbit::after { inset: 48px; border-style: dashed; }
+    .hero-panel {
+      position: relative; width: min(84%, 310px); padding: 22px; border-radius: 25px;
+      transform: rotate(5deg); animation: float-card 6s ease-in-out infinite;
+    }
+    .hero-panel-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: .74rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    .hero-panel-symbol { display: grid; place-items: center; width: 100%; aspect-ratio: 1.12; margin: 16px 0; overflow: hidden; border-radius: 17px; background: linear-gradient(145deg, #311a32, #e46f2d 70%, #ffbb69); }
+    .hero-panel-symbol svg { width: 100%; height: 100%; }
+    .hero-panel h2 { margin-bottom: 5px; font-size: 1.35rem; letter-spacing: -.04em; }
+    .hero-panel p { margin-bottom: 0; color: var(--muted); font-size: .88rem; }
+    .spark { position: absolute; color: var(--accent); font-size: 1.5rem; animation: twinkle 3s ease-in-out infinite; }
+    .spark-one { top: 12%; left: 10%; }
+    .spark-two { right: 8%; bottom: 14%; animation-delay: .8s; }
+
+    .section { padding: 58px 0; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+    .section-kicker { margin-bottom: 7px; color: var(--accent); font-size: .78rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .section-title { margin-bottom: 0; font-size: clamp(1.8rem, 3vw, 2.55rem); line-height: 1.15; letter-spacing: -.05em; }
+    .section-intro { max-width: 440px; margin-bottom: 0; color: var(--muted); }
+    .comic-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .comic-card {
+      overflow: hidden; display: flex; flex-direction: column; min-width: 0; border-radius: var(--radius);
+      text-decoration: none; transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    }
+    .comic-card:hover, .comic-card:focus-visible { transform: translateY(-7px) scale(1.018); border-color: rgba(245, 134, 49, .56); box-shadow: 0 22px 60px rgba(0, 0, 0, .24), 0 0 0 1px rgba(245, 134, 49, .1); }
+    .comic-cover { position: relative; aspect-ratio: 4 / 4.4; overflow: hidden; background: #271c3c; }
+    .comic-cover svg { display: block; width: 100%; height: 100%; transition: transform .45s cubic-bezier(.2, .7, .25, 1); }
+    .comic-card:hover .comic-cover svg, .comic-card:focus-visible .comic-cover svg { transform: scale(1.045); }
+    .cover-label { position: absolute; top: 15px; left: 15px; z-index: 2; padding: 6px 9px; border-radius: 999px; color: #fff; background: rgba(12, 10, 18, .45); border: 1px solid rgba(255, 255, 255, .25); backdrop-filter: blur(10px); font-size: .7rem; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+    .cover-number { position: absolute; right: 13px; bottom: 8px; color: rgba(255, 255, 255, .2); font-size: 3.5rem; font-weight: 950; letter-spacing: -.09em; line-height: 1; }
+    .comic-info { flex: 1; display: flex; flex-direction: column; padding: 21px; }
+    .comic-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: var(--muted); font-size: .76rem; font-weight: 700; }
+    .comic-meta i { color: var(--accent); margin-right: 5px; }
+    .comic-info h3 { margin-bottom: 8px; font-size: 1.35rem; line-height: 1.2; letter-spacing: -.04em; }
+    .comic-info p { margin-bottom: 17px; color: var(--muted); font-size: .92rem; }
+    .comic-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; color: var(--accent); font-size: .9rem; font-weight: 850; }
+    .comic-link i { transition: transform .2s ease; }
+    .comic-card:hover .comic-link i { transform: translateX(4px); }
+
+    .about-panel { display: grid; grid-template-columns: .8fr 1.2fr; gap: 32px; align-items: center; padding: clamp(24px, 4vw, 42px); border-radius: var(--radius); }
+    .about-symbol { display: grid; place-items: center; min-height: 220px; border-radius: 20px; overflow: hidden; background: radial-gradient(circle at 50% 40%, rgba(245,134,49,.28), transparent 52%), var(--glass); }
+    .about-symbol .brand-mark { width: 94px; height: 94px; border-radius: 28px; font-size: 2.3rem; }
+    .about-panel h2 { margin-bottom: 14px; font-size: clamp(1.7rem, 3vw, 2.4rem); letter-spacing: -.05em; line-height: 1.12; }
+    .about-panel p { margin-bottom: 0; color: var(--muted); }
+    .about-stats { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; }
+    .about-stat { min-width: 100px; }
+    .about-stat strong { display: block; color: var(--accent); font-size: 1.15rem; }
+    .about-stat span { color: var(--muted); font-size: .79rem; }
+
+    .social-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+    .social-card { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 17px; border-radius: 18px; text-decoration: none; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+    .social-card:hover, .social-card:focus-visible { transform: translateY(-4px); border-color: rgba(245, 134, 49, .5); background: var(--glass-strong); }
+    .social-icon { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 13px; background: var(--accent-soft); color: var(--accent); font-size: 1.15rem; }
+    .social-name { display: block; font-size: .9rem; font-weight: 850; }
+    .social-handle { display: block; overflow: hidden; color: var(--muted); font-size: .74rem; white-space: nowrap; text-overflow: ellipsis; }
+
+    .reviews-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 22px; align-items: start; }
+    .review-form-panel, .review-list-panel { padding: clamp(20px, 3vw, 30px); border-radius: var(--radius); }
+    .panel-title { margin-bottom: 7px; font-size: 1.35rem; letter-spacing: -.035em; }
+    .panel-copy { margin-bottom: 22px; color: var(--muted); font-size: .9rem; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label, .field-label { display: block; margin-bottom: 7px; font-size: .84rem; font-weight: 800; }
+    .form-control { display: block; width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid var(--glass-border); border-radius: 12px; outline: none; color: var(--text); background: var(--input); transition: border-color .2s ease, box-shadow .2s ease; }
+    textarea.form-control { min-height: 120px; resize: vertical; }
+    .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(245, 134, 49, .15); }
+    .form-control::placeholder { color: var(--muted); opacity: .85; }
+    select.form-control option { color: #201a20; background: #fff; }
+    .rating-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 7px; }
+    .rating-input input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .rating-input label { margin: 0; color: var(--muted); font-size: 1.55rem; cursor: pointer; transition: color .15s ease, transform .15s ease; }
+    .rating-input label:hover { transform: scale(1.1); }
+    .rating-input label:hover, .rating-input label:hover ~ label, .rating-input input:checked ~ label { color: var(--accent); }
+    .rating-input input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+    .form-note { margin: 12px 0 0; color: var(--muted); font-size: .75rem; }
+    .form-status { min-height: 1.5em; margin: 12px 0 0; color: var(--accent); font-size: .86rem; font-weight: 750; }
+    .reviews-topline { display: flex; align-items: start; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+    .rating-summary { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .8rem; white-space: nowrap; }
+    .rating-summary strong { color: var(--text); font-size: 1.1rem; }
+    .rating-summary .stars { color: var(--accent); letter-spacing: .03em; }
+    .review-filter { max-width: 220px; min-height: 40px; font-size: .83rem; }
+    .review-list { display: grid; gap: 12px; }
+    .review-item { padding: 17px; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--glass); }
+    .review-item-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+    .review-author { font-size: .91rem; font-weight: 850; }
+    .review-date { color: var(--muted); font-size: .72rem; }
+    .review-stars { margin-top: 3px; color: var(--accent); font-size: .82rem; letter-spacing: .05em; }
+    .review-comic-tag { display: inline-block; margin: 9px 0 5px; padding: 3px 8px; border-radius: 999px; color: var(--accent); background: var(--accent-soft); font-size: .7rem; font-weight: 850; }
+    .review-text { margin-bottom: 0; color: var(--muted); font-size: .87rem; overflow-wrap: anywhere; }
+    .empty-reviews { padding: 22px 12px; color: var(--muted); text-align: center; }
+    .empty-reviews i { display: block; margin-bottom: 8px; color: var(--accent); font-size: 1.4rem; }
+
+    .site-footer { margin-top: 42px; padding: 27px 0; border-top: 1px solid var(--glass-border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-copy { margin: 0; color: var(--muted); font-size: .82rem; }
+    .footer-top { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; font-size: .84rem; font-weight: 800; }
+    .footer-top:hover { color: var(--accent-hover); }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 100; max-width: min(380px, calc(100% - 40px)); padding: 13px 17px; border: 1px solid var(--glass-border); border-radius: 14px; background: var(--page-secondary); box-shadow: var(--shadow); color: var(--text); font-size: .88rem; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes float-card { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+    @keyframes twinkle { 0%, 100% { transform: scale(.85) rotate(0deg); opacity: .55; } 50% { transform: scale(1.15) rotate(12deg); opacity: 1; } }
+    @media (max-width: 980px) {
+      .header-inner { gap: 14px; }
+      .main-nav { gap: 13px; }
+      .main-nav a { font-size: .84rem; }
+      .hero-grid { gap: 20px; }
+      .social-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .social-card { padding: 14px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 28px, var(--max-width)); }
+      .header-inner { min-height: unset; padding-top: 13px; padding-bottom: 12px; flex-wrap: wrap; }
+      .brand-mark { width: 39px; height: 39px; border-radius: 12px; }
+      .theme-toggle { margin-left: auto; }
+      .main-nav { order: 3; width: 100%; justify-content: space-between; gap: 8px; overflow-x: auto; padding: 5px 1px 2px; }
+      .main-nav a { white-space: nowrap; font-size: .82rem; }
+      .hero { padding-top: 45px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { min-height: 270px; margin-top: -4px; }
+      .hero-orbit { width: 260px; }
+      .hero-panel { width: min(72%, 270px); }
+      .section { padding: 42px 0; }
+      .section-heading { align-items: start; flex-direction: column; gap: 11px; }
+      .comic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+      .comic-info { padding: 16px; }
+      .comic-info h3 { font-size: 1.15rem; }
+      .comic-info p { font-size: .85rem; }
+      .comic-meta { align-items: start; flex-direction: column; gap: 4px; }
+      .about-panel { grid-template-columns: 1fr; gap: 22px; }
+      .about-symbol { min-height: 160px; }
+      .social-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .reviews-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      .brand-caption { font-size: .62rem; }
+      .theme-toggle { min-height: 39px; padding: 8px 10px; }
+      .theme-toggle span { display: none; }
+      .main-nav a { font-size: .77rem; }
+      h1 { font-size: clamp(2.4rem, 13vw, 3.3rem); }
+      .hero-actions .button { width: 100%; }
+      .comic-grid { grid-template-columns: 1fr; }
+      .comic-cover { aspect-ratio: 5 / 4.2; }
+      .comic-info { padding: 18px; }
+      .comic-meta { flex-direction: row; align-items: center; }
+      .social-grid { gap: 10px; }
+      .social-card { gap: 9px; padding: 12px 10px; }
+      .social-icon { flex-basis: 36px; height: 36px; font-size: 1rem; }
+      .social-name { font-size: .82rem; }
+      .social-handle { font-size: .68rem; }
+      .reviews-topline { flex-direction: column; }
+      .review-filter { width: 100%; max-width: unset; }
+      .footer-inner { align-items: start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="SKX Studio — на главную">
+        <span class="brand-mark" aria-hidden="true">SKX</span>
+        <span class="brand-copy">
+          <span class="brand-name">SKX STUDIO</span>
+          <span class="brand-caption">Истории в кадрах</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="#comics">Комиксы</a>
+        <a href="#about">О студии</a>
+        <a href="#socials">Соцсети</a>
+        <a href="#reviews">Отзывы</a>
+      </nav>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему оформления" aria-pressed="false">
+        <i class="fa-solid fa-sun" aria-hidden="true"></i><span>Светлая тема</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Независимая комикс-студия</p>
+          <h1 id="hero-title">У каждой истории есть <span class="accent-text">свой мир.</span></h1>
+          <p class="hero-copy">Мы создаём комиксы, в которых оживают необычные герои, сложные выборы и вселенные, в которые хочется возвращаться. Выбирай историю и начинай читать.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#comics">Исследовать комиксы <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+            <a class="button button-secondary" href="#socials"><i class="fa-solid fa-users" aria-hidden="true"></i> Наше сообщество</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Иллюстрация с символом SKX Studio">
+          <div class="hero-orbit" aria-hidden="true"></div>
+          <span class="spark spark-one" aria-hidden="true"><i class="fa-solid fa-sparkles"></i></span>
+          <span class="spark spark-two" aria-hidden="true"><i class="fa-solid fa-star"></i></span>
+          <article class="hero-panel glass">
+            <div class="hero-panel-top"><span>SKX / universe</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+            <div class="hero-panel-symbol" aria-hidden="true">
+              <svg viewBox="0 0 300 260" role="img" aria-label="Абстрактная иллюстрация портала">
+                <defs>
+                  <linearGradient id="portalGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffbd75"/><stop offset=".48" stop-color="#f58631"/><stop offset="1" stop-color="#5f275f"/></linearGradient>
+                  <radialGradient id="portalGlow"><stop stop-color="#ffd39b" stop-opacity=".95"/><stop offset="1" stop-color="#f58631" stop-opacity="0"/></radialGradient>
+                </defs>
+                <circle cx="150" cy="122" r="114" fill="url(#portalGlow)"/>
+                <path d="M73 224V112a77 77 0 0 1 154 0v112h-22V112a55 55 0 0 0-110 0v112Z" fill="url(#portalGrad)"/>
+                <path d="M112 224v-94a38 38 0 0 1 76 0v94Z" fill="#291a31" opacity=".92"/>
+                <path d="m149 40 7 18 19 2-15 12 5 18-16-10-16 10 5-18-15-12 19-2Z" fill="#fff0d9"/>
+                <circle cx="90" cy="70" r="4" fill="#fff0d9"/><circle cx="215" cy="77" r="3" fill="#fff0d9"/><circle cx="205" cy="180" r="5" fill="#ffcb94"/>
+                <path d="M80 224h140" stroke="#ffcb94" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h2>Твоя следующая история</h2>
+            <p>Всего одна страница до приключения.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="comics" aria-labelledby="comics-title">
+      <div class="section-heading">
+        <div><p class="section-kicker">Библиотека SKX</p><h2 class="section-title" id="comics-title">Наши комиксы</h2></div>
+        <p class="section-intro">Три разных мира — и у каждого свои тайны. Нажми на обложку, чтобы перейти к комиксу.</p>
+      </div>
+
+      <div class="comic-grid">
+        <!-- Замените href каждой карточки на реальную ссылку на соответствующий комикс. -->
+        <a class="comic-card glass" href="https://example.com/comic-one" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Грань: Нулевой код">
+          <div class="comic-cover">
+            <span class="cover-label">Sci-fi · 01</span>
+            <svg viewBox="0 0 420 470" role="img" aria-label="Футуристический город под оранжевой луной">
+              <defs>
+                <linearGradient id="coverOneBg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1b2046"/><stop offset=".55" stop-color="#542c62"/><stop offset="1" stop-color="#f58631"/></linearGradient>
+                <linearGradient id="coverOneMoon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffdc9d"/><stop offset="1" stop-color="#f58631"/></linearGradient>
+              </defs>
+              <rect width="420" height="470" fill="url(#coverOneBg)"/>
+              <circle cx="295" cy="124" r="82" fill="url(#coverOneMoon)"/>
+              <circle cx="295" cy="124" r="105" fill="#f58631" opacity=".14"/>
+              <g fill="#14162e"><path d="M0 274 45 244 69 271 107 206 137 251 164 223 202 271V470H0Z"/><path d="M150 470V280h41v-55h40v90h27v-42h40v-80h39v116h31v-45h35v206Z"/></g>
+              <g stroke="#ffb16b" stroke-width="4" opacity=".8"><path d="M177 304h17m-17 19h17m-17 19h17m50-35h16m-16 20h16m30-65h18m-18 22h18m29 31h18m-18 20h18"/></g>
+              <path d="M198 470V370a31 31 0 0 1 62 0v100Z" fill="#e76f39"/>
+              <path d="M209 470V374a20 20 0 0 1 40 0v96Z" fill="#211d3c"/>
+              <path d="M0 395q100-40 205 5t215-4v74H0Z" fill="#101326" opacity=".7"/>
+              <g fill="#fff0d9"><circle cx="71" cy="75" r="3"/><circle cx="143" cy="116" r="2"/><circle cx="375" cy="52" r="3"/><circle cx="246" cy="42" r="2"/><circle cx="48" cy="174" r="2"/></g>
+              <text x="24" y="55" fill="#fff5e7" font-size="14" font-family="Arial,sans-serif" font-weight="700" letter-spacing="5">SKX ORIGINAL</text>
+              <text x="22" y="345" fill="#fff5e7" font-size="40" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-2">ГРАНЬ:</text>
+              <text x="22" y="386" fill="#ffb66f" font-size="31" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-1">НУЛЕВОЙ КОД</text>
+              <text x="25" y="418" fill="#f7e6dc" font-size="12" font-family="Arial,sans-serif" letter-spacing="3">ПРАВДА ЗА ПРЕДЕЛАМИ СИСТЕМЫ</text>
+            </svg>
+            <span class="cover-number" aria-hidden="true">01</span>
+          </div>
+          <div class="comic-info">
+            <div class="comic-meta"><span><i class="fa-solid fa-book-open" aria-hidden="true"></i> Научная фантастика</span><span>Серия № 1</span></div>
+            <h3>Грань: Нулевой код</h3>
+            <p>Город будущего скрывает сбой, который способен изменить реальность. Но кто написал первый код?</p>
+            <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </a>
+
+        <a class="comic-card glass" href="https://example.com/comic-two" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Пепельный город">
+          <div class="comic-cover">
+            <span class="cover-label">Mystery · 02</span>
+            <svg viewBox="0 0 420 470" role="img" aria-label="Таинственный город, окружённый дымом и горами">
+              <defs>
+                <linearGradient id="coverTwoBg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#291d3d"/><stop offset=".54" stop-color="#864a54"/><stop offset="1" stop-color="#f0a05f"/></linearGradient>
+                <linearGradient id="coverTwoFog" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffe2ba" stop-opacity="0"/><stop offset=".5" stop-color="#ffe2ba" stop-opacity=".5"/><stop offset="1" stop-color="#ffe2ba" stop-opacity="0"/></linearGradient>
+              </defs>
+              <rect width="420" height="470" fill="url(#coverTwoBg)"/>
+              <circle cx="95" cy="125" r="52" fill="#f8c28a" opacity=".8"/><circle cx="95" cy="125" r="78" fill="#f8c28a" opacity=".13"/>
+              <path d="M0 247 66 164l45 51 54-94 70 105 44-73 60 82 42-50 39 62v223H0Z" fill="#39283f" opacity=".88"/>
+              <path d="M0 292 40 264 77 286l38-38 47 33 31-45 37 39 40-37 40 46 37-29 41 35 32-27v213H0Z" fill="#211b34"/>
+              <g fill="#e9965c"><path d="M65 277h34v193H65Z"/><path d="M108 305h43v165h-43Z"/><path d="M166 255h54v215h-54Z"/><path d="M235 294h43v176h-43Z"/><path d="M292 265h49v205h-49Z"/><path d="M355 314h35v156h-35Z"/></g>
+              <g fill="#2a203b"><path d="M76 300h10v15H76zm0 31h10v15H76zm45-7h13v18h-13zm0 35h13v18h-13zm60-80h14v18h-14zm0 35h14v18h-14zm0 35h14v18h-14zm58-35h14v18h-14zm0 35h14v18h-14zm65-59h13v18h-13zm0 35h13v18h-13zm0 35h13v18h-13z"/></g>
+              <path d="M0 224Q100 188 210 238T420 224v34Q280 293 150 250T0 278Z" fill="url(#coverTwoFog)"/>
+              <path d="M0 371Q120 339 225 374T420 359v39Q300 425 180 393T0 412Z" fill="#d9a17a" opacity=".32"/>
+              <text x="24" y="54" fill="#fff0df" font-size="14" font-family="Arial,sans-serif" font-weight="700" letter-spacing="5">SKX ORIGINAL</text>
+              <text x="22" y="349" fill="#fff0df" font-size="39" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-2">ПЕПЕЛЬНЫЙ</text>
+              <text x="22" y="393" fill="#ffc07f" font-size="44" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-2">ГОРОД</text>
+              <text x="25" y="424" fill="#fff0df" font-size="12" font-family="Arial,sans-serif" letter-spacing="3">У КАЖДОГО ДЫМА ЕСТЬ ИСТОЧНИК</text>
+            </svg>
+            <span class="cover-number" aria-hidden="true">02</span>
+          </div>
+          <div class="comic-info">
+            <div class="comic-meta"><span><i class="fa-solid fa-moon" aria-hidden="true"></i> Мистика</span><span>Серия № 2</span></div>
+            <h3>Пепельный город</h3>
+            <p>Туман не рассеивается годами, а жители забывают прошлое. Одна находка меняет всё.</p>
+            <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </a>
+
+        <a class="comic-card glass" href="https://example.com/comic-three" target="_blank" rel="noopener noreferrer" aria-label="Открыть комикс Нулевой день">
+          <div class="comic-cover">
+            <span class="cover-label">Adventure · 03</span>
+            <svg viewBox="0 0 420 470" role="img" aria-label="Герой перед светящимся порталом в фантастический мир">
+              <defs>
+                <linearGradient id="coverThreeBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171b3d"/><stop offset=".55" stop-color="#59366e"/><stop offset="1" stop-color="#f58631"/></linearGradient>
+                <linearGradient id="coverThreePortal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe5b9"/><stop offset=".5" stop-color="#f58631"/><stop offset="1" stop-color="#9f3b62"/></linearGradient>
+              </defs>
+              <rect width="420" height="470" fill="url(#coverThreeBg)"/>
+              <path d="M0 0h420v470H0Z" fill="#1b1b39" opacity=".15"/>
+              <g stroke="#d6b9ff" stroke-width="2" opacity=".65"><path d="M33 0 119 180M96 0 158 141M356 0 290 157M410 43 332 194M0 82l111 83M420 174l-91 36M23 264l82-64"/></g>
+              <ellipse cx="217" cy="256" rx="104" ry="154" fill="#f58631" opacity=".14"/>
+              <path d="M130 390V189a87 87 0 0 1 174 0v201h-23V189a64 64 0 0 0-128 0v201Z" fill="url(#coverThreePortal)"/>
+              <path d="M171 390V203a46 46 0 0 1 92 0v187Z" fill="#302247"/>
+              <path d="M0 408 75 366l53 20 51-43 62 34 51-29 52 24 76-38v136H0Z" fill="#191831"/>
+              <g transform="translate(195 298)"><path d="M-29 28-21-17Q0-34 21-17l8 45 13 67h-84Z" fill="#11152d"/><circle cy="-37" r="19" fill="#efb16f"/><path d="M-23-46q22-28 46 0l-3 14h-40Z" fill="#17142c"/><path d="M-21-10-47 13l8 9 29-18m31-14 24 27-9 8-24-19" fill="#f58631"/><path d="M-26 94-35 138h16l19-44 17 44h16L22 94Z" fill="#11152d"/></g>
+              <g fill="#fff0d9"><circle cx="48" cy="121" r="3"/><circle cx="364" cy="94" r="3"/><circle cx="325" cy="282" r="2"/><circle cx="84" cy="320" r="2"/><circle cx="303" cy="52" r="2"/></g>
+              <text x="24" y="54" fill="#fff0df" font-size="14" font-family="Arial,sans-serif" font-weight="700" letter-spacing="5">SKX ORIGINAL</text>
+              <text x="22" y="354" fill="#fff0df" font-size="46" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-2">НУЛЕВОЙ</text>
+              <text x="22" y="399" fill="#ffc07f" font-size="48" font-family="Arial,sans-serif" font-weight="900" letter-spacing="-2">ДЕНЬ</text>
+              <text x="25" y="429" fill="#fff0df" font-size="12" font-family="Arial,sans-serif" letter-spacing="3">С ЧЕГО НАЧИНАЕТСЯ ЛЕГЕНДА?</text>
+            </svg>
+            <span class="cover-number" aria-hidden="true">03</span>
+          </div>
+          <div class="comic-info">
+            <div class="comic-meta"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Приключения</span><span>Серия № 3</span></div>
+            <h3>Нулевой день</h3>
+            <p>Когда открывается загадочный портал, обычный день становится началом большого пути.</p>
+            <span class="comic-link">Открыть комикс <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section container" id="about" aria-labelledby="about-title">
+      <div class="about-panel glass">
+        <div class="about-symbol" aria-hidden="true"><span class="brand-mark">SKX</span></div>
+        <div>
+          <p class="section-kicker">Кто мы</p>
+          <h2 id="about-title">Маленькая студия. <span class="accent-text">Большие вселенные.</span></h2>
+          <p>SKX Studio — творческая команда, которая собирает идеи, персонажей и визуальные миры в истории, которыми хочется делиться. Здесь читатели могут следить за новыми выпусками, общаться с авторами и рассказывать, что запомнилось больше всего.</p>
+          <div class="about-stats" aria-label="О студии">
+            <div class="about-stat"><strong>3 мира</strong><span>в этой витрине</span></div>
+            <div class="about-stat"><strong>Твоя идея</strong><span>может стать историей</span></div>
+            <div class="about-stat"><strong>SKX</strong><span>создано с фантазией</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="socials" aria-labelledby="socials-title">
+      <div class="section-heading">
+        <div><p class="section-kicker">Будь на связи</p><h2 class="section-title" id="socials-title">Наши соцсети</h2></div>
+        <p class="section-intro">Новости, анонсы, закулисье и общение с читателями — присоединяйся к SKX Studio.</p>
+      </div>
+      <div class="social-grid">
+        <!-- Замените адреса платформ на реальные ссылки профилей SKX Studio. -->
+        <a class="social-card glass" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube SKX Studio">
+          <span class="social-icon"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span><span><span class="social-name">YouTube</span><span class="social-handle">Видео и анонсы</span></span>
+        </a>
+        <a class="social-card glass" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram SKX Studio">
+          <span class="social-icon"><i class="fa-brands fa-telegram" aria-hidden="true"></i></span><span><span class="social-name">Telegram</span><span class="social-handle">Новости студии</span></span>
+        </a>
+        <a class="social-card glass" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord SKX Studio">
+          <span class="social-icon"><i class="fa-brands fa-discord" aria-hidden="true"></i></span><span><span class="social-name">Discord</span><span class="social-handle">Общение с фанатами</span></span>
+        </a>
+        <a class="social-card glass" href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SKX Studio">
+          <span class="social-icon"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span><span><span class="social-name">WhatsApp</span><span class="social-handle">Связаться с нами</span></span>
+        </a>
+        <a class="social-card glass" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok SKX Studio">
+          <span class="social-icon"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></span><span><span class="social-name">TikTok</span><span class="social-handle">Короткие ролики</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section container" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-heading">
+        <div><p class="section-kicker">Мнение сообщества</p><h2 class="section-title" id="reviews-title">Отзывы читателей</h2></div>
+        <p class="section-intro">Какой момент зацепил тебя? Оставь отзыв, чтобы помочь другим читателям выбрать историю.</p>
+      </div>
+      <div class="reviews-layout">
+        <section class="review-form-panel glass" aria-labelledby="form-title">
+          <h3 class="panel-title" id="form-title">Поделись впечатлением</h3>
+          <p class="panel-copy">Расскажи, что понравилось в комиксе. Поля со звёздочкой обязательны.</p>
+          <form id="reviewForm">
+            <div class="form-field">
+              <label for="reviewName">Имя или никнейм *</label>
+              <input class="form-control" id="reviewName" name="name" type="text" maxlength="32" placeholder="Например, ComicFan" autocomplete="nickname" required>
+            </div>
+            <div class="form-field">
+              <label for="reviewComic">Какой комикс? *</label>
+              <select class="form-control" id="reviewComic" name="comic" required>
+                <option value="one">Грань: Нулевой код</option>
+                <option value="two">Пепельный город</option>
+                <option value="three">Нулевой день</option>
+              </select>
+            </div>
+            <fieldset class="form-field" style="padding:0;border:0;margin-inline:0">
+              <legend class="field-label">Оценка *</legend>
+              <div class="rating-input" role="radiogroup" aria-label="Оценка от одной до пяти звёзд">
+                <input type="radio" id="rate5" name="rating" value="5" required><label for="rate5" aria-label="5 звёзд" title="5 звёзд">★</label>
+                <input type="radio" id="rate4" name="rating" value="4"><label for="rate4" aria-label="4 звезды" title="4 звезды">★</label>
+                <input type="radio" id="rate3" name="rating" value="3"><label for="rate3" aria-label="3 звезды" title="3 звезды">★</label>
+                <input type="radio" id="rate2" name="rating" value="2"><label for="rate2" aria-label="2 звезды" title="2 звезды">★</label>
+                <input type="radio" id="rate1" name="rating" value="1"><label for="rate1" aria-label="1 звезда" title="1 звезда">★</label>
+              </div>
+            </fieldset>
+            <div class="form-field">
+              <label for="reviewText">Твой отзыв *</label>
+              <textarea class="form-control" id="reviewText" name="text" minlength="8" maxlength="600" placeholder="Что тебе запомнилось?" required></textarea>
+            </div>
+            <button class="button button-primary" type="submit"><i class="fa-regular fa-paper-plane" aria-hidden="true"></i> Опубликовать отзыв</button>
+            <p class="form-note">Демонстрационный режим: отзыв сохраняется в этом браузере и не публикуется на сервере.</p>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="review-list-panel glass" aria-labelledby="list-title">
+          <div class="reviews-topline">
+            <div><h3 class="panel-title" id="list-title">Что говорят читатели</h3><div class="rating-summary" id="ratingSummary"><strong>—</strong><span class="stars" aria-hidden="true">★★★★★</span><span>отзывы</span></div></div>
+            <label class="sr-only" for="reviewFilter">Фильтр отзывов</label>
+            <select class="form-control review-filter" id="reviewFilter" aria-label="Показывать отзывы по комиксу">
+              <option value="all">Все комиксы</option>
+              <option value="one">Грань: Нулевой код</option>
+              <option value="two">Пепельный город</option>
+              <option value="three">Нулевой день</option>
+            </select>
+          </div>
+          <div class="review-list" id="reviewList" aria-live="polite"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">© <span id="year"></span> SKX Studio. Создано с фантазией.</p>
+      <a class="footer-top" href="#top">Вернуться наверх <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    // Названия комиксов используются в карточках отзывов и фильтре.
+    const comicNames = {
+      one: "Грань: Нулевой код",
+      two: "Пепельный город",
+      three: "Нулевой день"
+    };
+
+    const sampleReviews = [
+      { id: "sample-1", name: "PixelFox", comic: "one", rating: 5, text: "Очень нравится атмосфера футуристического города. Хочется узнать, что будет дальше!", date: "12.10.2026", demo: true },
+      { id: "sample-2", name: "Лис", comic: "two", rating: 4, text: "Классная загадочная атмосфера и интересная идея с туманом. Жду продолжения.", date: "15.10.2026", demo: true },
+      { id: "sample-3", name: "MiraDraws", comic: "three", rating: 5, text: "Портал и герой выглядят круто. Из этого мира можно сделать большое приключение.", date: "20.10.2026", demo: true }
+    ];
+
+    const REVIEWS_KEY = "skxStudioReviewsV1";
+    const THEME_KEY = "skxStudioThemeV1";
+    const reviewForm = document.getElementById("reviewForm");
+    const reviewList = document.getElementById("reviewList");
+    const reviewFilter = document.getElementById("reviewFilter");
+    const formStatus = document.getElementById("formStatus");
+    const ratingSummary = document.getElementById("ratingSummary");
+    const themeToggle = document.getElementById("themeToggle");
+    const toast = document.getElementById("toast");
+    let toastTimeout;
+
+    function loadReviews() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(REVIEWS_KEY) || "[]");
+        return Array.isArray(stored) ? stored.filter(item => item && typeof item.name === "string" && typeof item.text === "string" && comicNames[item.comic] && Number(item.rating) >= 1 && Number(item.rating) <= 5) : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveReviews(reviews) {
+      try {
+        localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function getAllReviews() {
+      return [...loadReviews(), ...sampleReviews];
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function formatStars(rating) {
+      const value = Math.max(1, Math.min(5, Number(rating) || 0));
+      return "★".repeat(value) + "☆".repeat(5 - value);
+    }
+
+    function renderReviews() {
+      const allReviews = getAllReviews();
+      const filter = reviewFilter.value;
+      const visible = filter === "all" ? allReviews : allReviews.filter(review => review.comic === filter);
+      const average = allReviews.length ? (allReviews.reduce((sum, review) => sum + Number(review.rating), 0) / allReviews.length).toFixed(1) : "—";
+      ratingSummary.innerHTML = `<strong>${average}</strong><span class="stars" aria-hidden="true">★★★★★</span><span>${allReviews.length} ${allReviews.length === 1 ? "отзыв" : allReviews.length < 5 ? "отзыва" : "отзывов"}</span>`;
+
+      if (!visible.length) {
+        reviewList.innerHTML = '<div class="empty-reviews"><i class="fa-regular fa-comment-dots" aria-hidden="true"></i>Пока нет отзывов по этому комиксу. Будь первым!</div>';
+        return;
+      }
+
+      reviewList.innerHTML = visible.map(review => `
+        <article class="review-item">
+          <div class="review-item-head">
+            <div><div class="review-author">${escapeHTML(review.name)}</div><div class="review-stars" aria-label="Оценка: ${Number(review.rating)} из 5">${formatStars(review.rating)}</div></div>
+            <time class="review-date">${escapeHTML(review.date || "Недавно")}</time>
+          </div>
+          <span class="review-comic-tag">${escapeHTML(comicNames[review.comic])}</span>
+          <p class="review-text">${escapeHTML(review.text)}</p>
+        </article>`).join("");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(toastTimeout);
+      toastTimeout = window.setTimeout(() => toast.classList.remove("is-visible"), 3600);
+    }
+
+    reviewForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!reviewForm.reportValidity()) return;
+
+      const formData = new FormData(reviewForm);
+      const name = String(formData.get("name") || "").trim();
+      const comic = String(formData.get("comic") || "");
+      const text = String(formData.get("text") || "").trim();
+      const rating = Number(formData.get("rating"));
+
+      if (!name || !comicNames[comic] || text.length < 8 || text.length > 600 || rating < 1 || rating > 5) {
+        formStatus.textContent = "Проверь поля формы и попробуй ещё раз.";
+        return;
+      }
+
+      const reviews = loadReviews();
+      reviews.unshift({
+        id: `review-${Date.now()}`,
+        name: name.slice(0, 32), comic, rating, text: text.slice(0, 600),
+        date: new Date().toLocaleDateString("ru-RU"), demo: false
+      });
+
+      if (!saveReviews(reviews)) {
+        formStatus.textContent = "Браузер не разрешил сохранить отзыв. Проверь настройки хранилища.";
+        return;
+      }
+
+      formStatus.textContent = "Отзыв сохранён в этом браузере. Спасибо за мнение!";
+      reviewForm.reset();
+      reviewFilter.value = "all";
+      renderReviews();
+      showToast("Спасибо! Твой отзыв добавлен в локальный список.");
+    });
+
+    reviewFilter.addEventListener("change", renderReviews);
+
+    function applyTheme(theme) {
+      const isLight = theme === "light";
+      document.body.dataset.theme = isLight ? "light" : "dark";
+      themeToggle.setAttribute("aria-pressed", String(isLight));
+      themeToggle.innerHTML = isLight
+        ? '<i class="fa-solid fa-moon" aria-hidden="true"></i><span>Тёмная тема</span>'
+        : '<i class="fa-solid fa-sun" aria-hidden="true"></i><span>Светлая тема</span>';
+      try { localStorage.setItem(THEME_KEY, isLight ? "light" : "dark"); } catch (error) { /* Тема останется до перезагрузки страницы. */ }
+    }
+
+    themeToggle.addEventListener("click", () => {
+      applyTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === "light" || savedTheme === "dark") applyTheme(savedTheme);
+    } catch (error) { /* Используется тёмная тема по умолчанию. */ }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderReviews();
+  </script>
+</body>
+</html>
